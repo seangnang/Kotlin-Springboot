@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main',
+                git branch: 'master',
                     credentialsId: 'github-creds',
                     url: 'https://github.com/seangnang/Kotlin-Springboot.git'
             }
