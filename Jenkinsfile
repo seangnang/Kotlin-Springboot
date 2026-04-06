@@ -1,12 +1,5 @@
-﻿pipeline {
+pipeline {
     agent any
-
-    environment {
-        IMAGE_NAME = "spring-boot-app"
-        CONTAINER  = "spring-app"
-        PORT       = "9090"
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -15,13 +8,11 @@
                     url: 'https://github.com/seangnang/Kotlin-Springboot.git'
             }
         }
-
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t spring-boot-app .'
             }
         }
-
         stage('Deploy') {
             steps {
                 sh '''
@@ -36,9 +27,8 @@
             }
         }
     }
-
     post {
         success { echo 'App live at port 9090' }
-        failure { echo 'Build failed - check Console Output' }
+        failure { echo 'Build failed' }
     }
 }
