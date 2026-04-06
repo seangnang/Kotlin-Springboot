@@ -8,7 +8,6 @@
     }
 
     stages {
-
         stage('Checkout') {
             steps {
                 git branch: 'main',
@@ -19,27 +18,27 @@
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t \ .'
+                sh 'docker build -t spring-boot-app .'
             }
         }
 
         stage('Deploy') {
             steps {
                 sh '''
-                    docker stop \ || true
-                    docker rm   \ || true
+                    docker stop spring-app || true
+                    docker rm spring-app || true
                     docker run -d \
-                        --name \ \
-                        -p \ \
+                        --name spring-app \
+                        -p 9090:8080 \
                         --restart unless-stopped \
-                        \
+                        spring-boot-app
                 '''
             }
         }
     }
 
     post {
-        success { echo 'App live at http://YOUR_SERVER_IP:9090' }
+        success { echo 'App live at port 9090' }
         failure { echo 'Build failed - check Console Output' }
     }
 }
